@@ -10,7 +10,7 @@
     rel="stylesheet" 
     integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" 
     crossorigin="anonymous">
-    <title>Hello, world!</title>
+    <title>Ecom</title>
   </head>
   <body>
 
@@ -35,31 +35,30 @@
 
 
             <ul class="navbar-nav my-2 my-lg-0">
+<!--we cant directly access customer obj by--if customer--bcz we have saved it in session and we cant directly access sessoin obj -->
+              {% if request.session.customer %}
+              <li class="nav-item ">
+                <a class="nav-link" href="/cart/">Cart</span></a>
+              </li>  
+
+                <li class="nav-item ">
+                    <a class="nav-link" href="/orders/">Orders</span></a>
+                </li>
                 <li class="nav-item ">
                     <a class="nav-link" href="/logout/">Logout</span></a>
-                  </li>
-
+                </li>
+                  
+              {% else %}
                 <li class="nav-item active">
                     <a class="nav-link" href="/signup/">Signup</span></a>
-                  </li>
-
-                  <li class="nav-item ">
-                    <a class="nav-link" href="/login/">Login</span></a>
-                  </li>
-                
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" 
-                  role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Profile
-                  </a>
-                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                  </ul>
                 </li>
-              </ul>
+
+                <li class="nav-item ">
+                    <a class="nav-link" href="/login/">Login</span></a>
+                </li>
+                {% endif %}
+                
+            </ul>
 
 
           </div>

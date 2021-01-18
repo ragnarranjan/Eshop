@@ -17,8 +17,16 @@ class Login(View):
         if customer:
             flag = check_password(password,customer.password)
             if flag == True:
+                request.session ['customer'] = customer.id #this line or request.session ['customer_id'] = customer.id  --are same
+                #request.session ['customer_id'] = customer.id # in customer obj every inform is available 
+                #request.session['email'] = customer.email
                 return redirect ('homepage')
             else:
                 error_message = 'email or password invalid'
         print(email,password)
         return render(request,'orders/login.html',{'error' : error_message})
+
+
+def logout(request):
+    request.session.clear()
+    return redirect('login')

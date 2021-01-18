@@ -7,13 +7,37 @@ from django.views import View
 class Index(View):
 
     def post(self,request):
-        product = request.POST.get('product')  #to get productid----we can read 
+        product = request.POST.get('product')  #to get productid----we can read   
+        remove = request.POST.get('remove')                 
         cart = request.session.get('cart')
-        print(product)             
+        if cart:
+            quantity = cart.get(product)
+            if quantity:
+                if remove:
+                    if quantity <=1:
+                        cart.pop(product)
+                    else:
+                        cart[product] = quantity - 1
+                else:
+                    cart[product] = quantity + 1
+                    
+            else:
+                cart[product] = 1
+            
+        else:
+            cart = {}
+            cart[product] = 1
+
+        request.session['cart'] = cart
+        print(cart)
         return redirect('homepage')
 
 
-    def get(self,request):        
+    def get(self,request):   
+        cart = request.session.get('cart')
+        if not cart:
+            request.session['cart'] = {}
+            
         products = None
         categories = Category.get_all_categories()
         categoryID = request.GET.get('category')
@@ -25,6 +49,7 @@ class Index(View):
         data = {}
         data['products'] = products
         data['categories'] = categories
+        print('you are',request.session.get('email'))
         return render(request, 'orders/index.html', data)
         
 
